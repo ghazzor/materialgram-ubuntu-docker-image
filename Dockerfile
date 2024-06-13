@@ -67,6 +67,7 @@ RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && git submodule update --init \
  && mkdir build \
  && cd build \
+ && DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
  && cmake .. \
  && cmake --build . \
  && cmake --install .\
