@@ -64,10 +64,10 @@ RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && cd .. && rm -rf rnnoise
 
  RUN git clone https://git.launchpad.net/ubuntu/+source/cppgir && cd cppgir \
- && mkdir build \ 
+ && git submodule update --init \
+ && mkdir build \
  && cd build \
  && cmake .. \
  && cmake --build . \
  && cmake --install .\
  && cd .. && rm -rf cppgir
- 
