@@ -1,9 +1,15 @@
 FROM debian:unstable
 
-RUN apt update && apt install -y \
+RUN /usr/lib/*/libc.so.6 --version
+RUN apt update && apt install nala -y
+
+RUN nala install -y \ 
  autoconf \
+ wget \
+ build-essential \
+ llvm \
+ lld \
  cmake \
- cppgir \
  gobject-introspection \
  libtool \
  libarchive-tools \
@@ -12,6 +18,8 @@ RUN apt update && apt install -y \
  libavfilter-dev \
  libavformat-dev \
  libavutil-dev \
+ libfmt-dev \
+ libboost-dev \
  libboost-regex-dev \
  libexpected-dev \
  libgirepository1.0-dev \
@@ -50,11 +58,26 @@ RUN apt update && apt install -y \
  qtbase5-private-dev \
  protobuf-compiler \
  clang \
+ gcc-12 \
  qtdeclarative5-dev \
  zlib1g-dev \
- git vim neovim wget
+ git vim neovim
+
+RUN git clone https://gitlab.com/mnauw/cppgir
+
+WORKDIR cppgir
+RUN git submodule update --init
+
+RUN mkdir build
+
+WORKDIR build
+RUN cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
+RUN cmake --build .
+RUN cmake --install .
+
+WORKDIR /
+RUN rm -rf cppgir
 
 RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && ./autogen.sh && ./configure && make install \
  && cd .. && rm -rf rnnoise
-
