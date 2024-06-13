@@ -11,7 +11,6 @@ RUN nala install -y \
  libyuv-utils \
  libyuv0 \
  libvpx-dev \
- libvpx7 \
  libtgowt-dev \
  build-essential \
  llvm \
