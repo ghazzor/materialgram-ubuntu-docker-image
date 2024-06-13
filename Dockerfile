@@ -7,6 +7,7 @@ RUN nala install -y \
  autoconf \
  wget \
  sudo \
+ libjemalloc-dev \
  libyuv-dev \
  libyuv-utils \
  libyuv0 \
