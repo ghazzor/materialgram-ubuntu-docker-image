@@ -84,10 +84,6 @@ RUN nala install -y \
  git vim neovim
 
 RUN rm -rf /var/lib/apt/lists/*
-RUN which clang++
-
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 60
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 60
 
 RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
 
@@ -110,6 +106,7 @@ RUN git submodule update --init
 RUN mkdir build
 
 WORKDIR build
+RUN cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ ..
 RUN cmake --build .
 RUN cmake --install .
 
