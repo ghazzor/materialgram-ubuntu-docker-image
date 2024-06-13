@@ -7,8 +7,6 @@ RUN nala install -y \
  autoconf \
  wget \
  sudo \
- gcc-14 \
- g++-14 \
  libjemalloc-dev \
  libyuv-dev \
  libyuv-utils \
