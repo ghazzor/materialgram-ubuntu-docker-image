@@ -6,8 +6,13 @@ RUN apt update && apt install nala -y
 RUN nala install -y \ 
  autoconf \
  wget \
+ sudo \
  libyuv-dev \
  libyuv-utils \
+ libyuv0 \
+ libvpx-dev \
+ libvpx7 \
+ libtgowt-dev \
  build-essential \
  llvm \
  lld \
@@ -64,6 +69,7 @@ RUN nala install -y \
  zlib1g-dev \
  git vim neovim
 
+RUN rm -rf /var/lib/apt/lists/*
 RUN which clang++
 
 # Clone the repository and initialize submodules
