@@ -6,7 +6,8 @@ RUN apt update && apt install nala -y
 RUN nala install -y \ 
  autoconf \
  wget \
- gcc-12 \
+ libyuv-dev \
+ libyuv-utils \
  build-essential \
  llvm \
  lld \
