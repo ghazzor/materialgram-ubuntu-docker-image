@@ -63,6 +63,9 @@ RUN nala install -y \
  zlib1g-dev \
  git vim neovim
 
+RUN which clang++
+
+# Clone the repository and initialize submodules
 RUN git clone https://gitlab.com/mnauw/cppgir
 
 WORKDIR cppgir
