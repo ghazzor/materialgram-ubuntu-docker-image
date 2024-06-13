@@ -5,6 +5,7 @@ RUN apt update && apt install nala -y
 
 RUN nala install -y \ 
  autoconf \
+ wget \
  cmake \
  gobject-introspection \
  libtool \
