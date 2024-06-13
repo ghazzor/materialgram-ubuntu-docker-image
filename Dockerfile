@@ -63,13 +63,6 @@ RUN nala install -y \
  zlib1g-dev \
  git vim neovim
 
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
-    apt-get update
-RUN apt-get install -y gcc-13 g++-13
-RUN gcc-13 --version && g++-13 --version
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
-
 RUN git clone https://gitlab.com/mnauw/cppgir
 
 WORKDIR cppgir
