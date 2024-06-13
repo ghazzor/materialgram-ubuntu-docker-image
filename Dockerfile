@@ -64,15 +64,21 @@ RUN nala install -y \
 
 RUN which clang++
 
-RUN git clone https://git.launchpad.net/ubuntu/+source/cppgir && cd cppgir \
- && git submodule update --init \
- && mkdir build \
- && cd build \
- && cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
- && cmake .. \
- && cmake --build . \
- && cmake --install .\
- && cd .. && cd .. && rm -rf cppgir
+# Clone the repository and initialize submodules
+RUN git clone https://gitlab.com/mnauw/cppgir
+
+WORKDIR cppgir
+RUN git submodule update --init
+
+RUN mkdir build
+
+WORKDIR build
+RUN cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
+RUN cmake --build .
+RUN cmake --install .
+
+WORKDIR /
+RUN rm -rf cppgir
 
 RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && ./autogen.sh && ./configure && make install \
