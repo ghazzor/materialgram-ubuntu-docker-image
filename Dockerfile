@@ -6,6 +6,9 @@ RUN apt update && apt install nala -y
 RUN nala install -y \ 
  autoconf \
  wget \
+ build-essential \
+ llvm \
+ lld \
  cmake \
  gobject-introspection \
  libtool \
@@ -59,11 +62,9 @@ RUN nala install -y \
  zlib1g-dev \
  git vim neovim
 
-RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
- && ./autogen.sh && ./configure && make install \
- && cd .. && rm -rf rnnoise
+RUN which clang++
 
- RUN git clone https://git.launchpad.net/ubuntu/+source/cppgir && cd cppgir \
+RUN git clone https://git.launchpad.net/ubuntu/+source/cppgir && cd cppgir \
  && git submodule update --init \
  && mkdir build \
  && cd build \
@@ -71,4 +72,8 @@ RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && cmake .. \
  && cmake --build . \
  && cmake --install .\
- && cd .. && rm -rf cppgir
+ && cd .. && cd .. && rm -rf cppgir
+
+RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
+ && ./autogen.sh && ./configure && make install \
+ && cd .. && rm -rf rnnoise
