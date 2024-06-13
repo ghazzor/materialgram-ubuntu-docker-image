@@ -27,6 +27,14 @@ RUN nala install -y \
  libavutil-dev \
  libfmt-dev \
  libboost-dev \
+ libboost-all-dev \
+ meson \
+ mm-common \
+ extra-cmake-modules \
+ wayland-protocols \
+ plasma-wayland-protocols \
+ gir1.2-gobject-2.0 \
+ python3-packaging \
  libboost-regex-dev \
  libexpected-dev \
  libgirepository1.0-dev \
@@ -39,6 +47,7 @@ RUN nala install -y \
  libminizip-dev \
  libmsgsl-dev \
  libopenal-dev \
+ qtwayland5 \
  libopus-dev \
  libpulse-dev \
  libqrcodegencpp-dev \
@@ -55,11 +64,14 @@ RUN nala install -y \
  libxcb-screensaver0-dev \
  libxcb1-dev \
  libxxhash-dev \
+ pipewire \
+ libxtst-dev \
  node-prismjs \
  node-types-lodash.isequal \
  nodejs \
  ninja-build \
  pkg-config \
+ chrpath \
  python3:any \
  qtbase5-dev \
  qtbase5-private-dev \
@@ -72,7 +84,19 @@ RUN nala install -y \
 RUN rm -rf /var/lib/apt/lists/*
 RUN which clang++
 
-# Clone the repository and initialize submodules
+RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
+
+WORKDIR abseil-cpp
+RUN mkdir build
+
+WORKDIR build
+RUN cmake ..
+RUN make
+RUN make install
+
+WORKDIR /
+RUN rm -rf abseil-cpp
+
 RUN git clone https://gitlab.com/mnauw/cppgir
 
 WORKDIR cppgir
