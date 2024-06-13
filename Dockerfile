@@ -7,6 +7,8 @@ RUN nala install -y \
  autoconf \
  wget \
  sudo \
+ gcc-14 \
+ g++-14 \
  libjemalloc-dev \
  libyuv-dev \
  libyuv-utils \
@@ -14,8 +16,8 @@ RUN nala install -y \
  libvpx-dev \
  libtgowt-dev \
  build-essential \
- llvm \
- lld \
+ llvm-18 \
+ lld-18 \
  cmake \
  gobject-introspection \
  libtool \
@@ -76,13 +78,16 @@ RUN nala install -y \
  qtbase5-dev \
  qtbase5-private-dev \
  protobuf-compiler \
- clang \
+ clang-18 \
  qtdeclarative5-dev \
  zlib1g-dev \
  git vim neovim
 
 RUN rm -rf /var/lib/apt/lists/*
 RUN which clang++
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 60
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 60
 
 RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
 
@@ -105,7 +110,6 @@ RUN git submodule update --init
 RUN mkdir build
 
 WORKDIR build
-RUN cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
 RUN cmake --build .
 RUN cmake --install .
 
