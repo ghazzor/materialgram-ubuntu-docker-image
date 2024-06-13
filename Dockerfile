@@ -58,13 +58,18 @@ RUN nala install -y \
  qtbase5-private-dev \
  protobuf-compiler \
  clang \
+ gcc-12 \
  qtdeclarative5-dev \
  zlib1g-dev \
  git vim neovim
 
-RUN which clang++
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get update
+RUN apt-get install -y gcc-13 g++-13
+RUN gcc-13 --version && g++-13 --version
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
 
-# Clone the repository and initialize submodules
 RUN git clone https://gitlab.com/mnauw/cppgir
 
 WORKDIR cppgir
