@@ -68,7 +68,7 @@ RUN git clone https://git.launchpad.net/ubuntu/+source/cppgir && cd cppgir \
  && git submodule update --init \
  && mkdir build \
  && cd build \
- && DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+ && cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
  && cmake .. \
  && cmake --build . \
  && cmake --install .\
