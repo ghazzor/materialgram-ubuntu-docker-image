@@ -6,6 +6,7 @@ RUN apt update && apt install nala -y
 RUN nala install -y \ 
  autoconf \
  wget \
+ gcc-12 \
  build-essential \
  llvm \
  lld \
@@ -58,11 +59,13 @@ RUN nala install -y \
  qtbase5-private-dev \
  protobuf-compiler \
  clang \
- gcc-12 \
  qtdeclarative5-dev \
  zlib1g-dev \
  git vim neovim
 
+RUN which clang++
+
+# Clone the repository and initialize submodules
 RUN git clone https://gitlab.com/mnauw/cppgir
 
 WORKDIR cppgir
