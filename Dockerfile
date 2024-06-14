@@ -10,7 +10,7 @@ RUN apt update && apt install \
   libopengl-dev \
   libopengl0 \
   wget \
-  install lsb-release \ 
+  lsb-release \ 
   software-properties-common \
   gnupg \
   libabsl-dev \
@@ -24,8 +24,6 @@ RUN apt update && apt install \
   libvpx-dev \
   libtgowt-dev \
   build-essential \
-  llvm-15 \
-  lld-15 \
   cmake \
   gobject-introspection \
   libtool \
@@ -85,7 +83,6 @@ RUN apt update && apt install \
   qtbase5-dev \
   qtbase5-private-dev \
   protobuf-compiler \
-  clang-15 \
   qtdeclarative5-dev \
   zlib1g-dev \
   bison \
