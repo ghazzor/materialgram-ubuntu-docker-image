@@ -6,6 +6,8 @@ RUN apt update && apt install -y \
  libopengl-dev \
  libopengl0 \
  wget \
+ libabsl-dev \
+ libpthread-stubs0-dev \
  sudo \
  ronn \
  libjemalloc-dev \
@@ -84,6 +86,7 @@ RUN apt update && apt install -y \
  flex \ 
  qtcreator \
  qtbase5-dev \
+ qt5-default \
  qt5-qmake \
  qttools5-dev-tools \
  libncurses-dev \
@@ -99,22 +102,22 @@ RUN apt update && apt install -y \
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
-WORKDIR abseil-cpp
-RUN mkdir build
-WORKDIR build
-RUN cmake ..
-RUN make
-RUN make install
-WORKDIR /
-RUN rm -rf abseil-cpp
+#RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
+#WORKDIR abseil-cpp
+#RUN mkdir build
+#WORKDIR build
+#RUN cmake ..
+#RUN make
+#RUN make install
+#WORKDIR /
+#RUN rm -rf abseil-cpp
 
 RUN git clone https://gitlab.com/mnauw/cppgir
 WORKDIR cppgir
 RUN git submodule update --init
 RUN mkdir build
 WORKDIR build
-RUN cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ ..
+RUN cmake -DCMAKE_C_COMPILER=/usr/bin/clang-18 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-18 ..
 RUN cmake --build .
 RUN cmake --install .
 WORKDIR /
