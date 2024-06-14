@@ -1,10 +1,10 @@
 FROM debian:unstable
 
 RUN /usr/lib/*/libc.so.6 --version
-RUN apt update && apt install nala -y
-
-RUN nala install -y \ 
+RUN apt update && apt install -y \
  autoconf \
+ libopengl-dev \
+ libopengl0 \
  wget \
  sudo \
  ronn \
@@ -80,7 +80,20 @@ RUN nala install -y \
  clang-18 \
  qtdeclarative5-dev \
  zlib1g-dev \
+ bison \
+ flex \ 
+ qtcreator \
+ qtbase5-dev \
+ qt5-qmake \
+ qttools5-dev-tools \
+ libncurses-dev \
+ libelf-dev \
+ elfutils \
+ zstd \
+ debhelper \
+ dh-virtualenv \
  git vim neovim
+
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -104,16 +117,6 @@ RUN cmake --build .
 RUN cmake --install .
 WORKDIR /
 RUN rm -rf cppgir
-
-RUN git clone --depth=1 --recursive https://github.com/telegramdesktop/libtgvoip
-WORKDIR libtgvoip
-RUN mkdir build
-WORKDIR build
-RUN cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ ..
-RUN cmake --build .
-RUN cmake --install .
-WORKDIR /
-RUN rm -rf libtgvoip
 
 RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && ./autogen.sh && ./configure && make install \
