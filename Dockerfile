@@ -7,6 +7,7 @@ RUN nala install -y \
  autoconf \
  wget \
  sudo \
+ ronn \
  libjemalloc-dev \
  libyuv-dev \
  libyuv-utils \
@@ -84,32 +85,35 @@ RUN nala install -y \
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth=1 https://github.com/abseil/abseil-cpp
-
 WORKDIR abseil-cpp
 RUN mkdir build
-
 WORKDIR build
 RUN cmake ..
 RUN make
 RUN make install
-
 WORKDIR /
 RUN rm -rf abseil-cpp
 
 RUN git clone https://gitlab.com/mnauw/cppgir
-
 WORKDIR cppgir
 RUN git submodule update --init
-
 RUN mkdir build
-
 WORKDIR build
 RUN cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ ..
 RUN cmake --build .
 RUN cmake --install .
-
 WORKDIR /
 RUN rm -rf cppgir
+
+RUN git clone --depth=1 --recursive https://github.com/telegramdesktop/libtgvoip
+WORKDIR libtgvoip
+RUN mkdir build
+WORKDIR build
+RUN cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ ..
+RUN cmake --build .
+RUN cmake --install .
+WORKDIR /
+RUN rm -rf libtgvoip
 
 RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
  && ./autogen.sh && ./configure && make install \
