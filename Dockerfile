@@ -10,6 +10,9 @@ RUN apt update && apt install -y \
   libopengl-dev \
   libopengl0 \
   wget \
+  install lsb-release \ 
+  software-properties-common \
+  gnupg \
   libabsl-dev \
   libpthread-stubs0-dev \
   sudo \
@@ -103,11 +106,24 @@ RUN apt update && apt install -y \
   neovim \
   && rm -rf /var/lib/apt/lists/*
 
+# Install GCC-13 and CLANG-18
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && \
+    apt-get install -y gcc-13 g++-13 && \
+    wget https://apt.llvm.org/llvm.sh && \
+    chmod +x llvm.sh && \
+    sudo ./llvm.sh 18 && \
+    rm -rf llvm.sh && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 60 && \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 60 && \ 
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 && \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+    
+
 # Clone and build cppgir
 RUN git clone https://gitlab.com/mnauw/cppgir && cd cppgir \
   && git submodule update --init \
   && mkdir build && cd build \
-  && cmake -DCMAKE_C_COMPILER=/usr/bin/clang-15 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 .. \
+  && cmake -DCMAKE_C_COMPILER=/usr/bin/clang-18 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-18 .. \
   && cmake --build . \
   && cmake --install . \
   && cd ../.. && rm -rf cppgir
