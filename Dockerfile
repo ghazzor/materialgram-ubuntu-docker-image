@@ -91,6 +91,8 @@ RUN apt update && apt install -y \
  elfutils \
  zstd \
  debhelper \
+ gir1.2-gstreamer-1.0 \
+ libqt5gstreamer-1.0-0 \
  dh-virtualenv \
  git vim neovim
 
