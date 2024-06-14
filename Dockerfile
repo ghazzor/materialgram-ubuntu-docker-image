@@ -5,7 +5,7 @@ FROM ubuntu:jammy
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install required packages
-RUN apt update && apt install -y \
+RUN apt update && apt install \
   autoconf \
   libopengl-dev \
   libopengl0 \
@@ -104,7 +104,8 @@ RUN apt update && apt install -y \
   git \
   vim \
   neovim \
-  && rm -rf /var/lib/apt/lists/*
+  -y && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install GCC-13 and CLANG-18
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && \
