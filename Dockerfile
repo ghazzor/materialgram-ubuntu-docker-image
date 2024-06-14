@@ -1,4 +1,8 @@
+# Use ubuntu jammy
 FROM ubuntu:jammy
+
+# Set DEBIAN_FRONTEND to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install required packages
 RUN apt update && apt install -y \
@@ -112,3 +116,6 @@ RUN git clone https://gitlab.com/mnauw/cppgir && cd cppgir \
 RUN git clone https://github.com/xiph/rnnoise.git && cd rnnoise \
   && ./autogen.sh && ./configure && make install \
   && cd .. && rm -rf rnnoise
+
+# Set DEBIAN_FRONTEND to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
