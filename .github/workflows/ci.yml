@@ -3,8 +3,6 @@ name: Build and Push Docker Image
 on:
   workflow_dispatch:
   push:
-  schedule:
-    - cron: '0 0 */14 * *'
 
 jobs:
   build-and-push:
@@ -24,4 +22,4 @@ jobs:
       run: |
         docker buildx create --use
         docker buildx inspect --bootstrap
-        docker buildx build -t ghazzor/ubuntu-tg:latest-deb -t ghazzor/ubuntu-tg:$(date +%Y%m%d%H%M%S)-deb --platform linux/amd64 . --push
+        docker buildx build -t ghazzor/pdeb:latest -t ghazzor/pdeb:$(date +%Y%m%d%H%M%S) --platform linux/amd64 . --push
